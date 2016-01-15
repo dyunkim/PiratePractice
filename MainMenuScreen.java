@@ -3,9 +3,7 @@ package com.david.piratepractice;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -28,7 +26,7 @@ public class MainMenuScreen implements Screen{
 
     public MainMenuScreen(PiratePractice game) {
         this.game = game;
-        skinCreate();
+        skin = new Skin(Gdx.files.internal("skins/MenuSkin/uiskin.json"));
         create();
     }
 
@@ -58,6 +56,7 @@ public class MainMenuScreen implements Screen{
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
                 System.out.println("Play");
+                game.setScreen(new GameScreen(game));
                 return false;
             }
         });
@@ -132,16 +131,6 @@ public class MainMenuScreen implements Screen{
         skin.dispose();
     }
 
-    private void skinCreate() {
-        skin = new Skin(Gdx.files.internal("skins/MenuSkin/uiskin.json"));
-        FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("skins/MenuSkin/tomshandwritten.ttf"));
-        FreeTypeFontGenerator.FreeTypeFontParameter parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
-        parameter.size = 35;
-        BitmapFont menuFont = generator.generateFont(parameter); // font size 12 pixels
-        skin.add("font", menuFont);
-        skin.get("Button", TextButton.TextButtonStyle.class).font = menuFont;
 
-        generator.dispose();
-    }
 
 }

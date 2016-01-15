@@ -11,6 +11,8 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 public class PiratePractice extends Game {
     public int SCREEN_WIDTH;
     public int SCREEN_HEIGHT;
+    public static int V_WIDTH = 576;
+    public static int V_HEIGHT = 1024;
     public SpriteBatch batch;
     public BitmapFont font;
     public final String gameName = "Pirate Practice";
@@ -21,7 +23,7 @@ public class PiratePractice extends Game {
         font = new BitmapFont();
         SCREEN_WIDTH = Gdx.graphics.getWidth();
         SCREEN_HEIGHT = Gdx.graphics.getHeight();
-        this.setScreen(new MainMenuScreen(this));
+        this.setScreen(new MainMenuScreen(this));       //TODO: UPDATE WHEN DONE TESTING
     }
 
     @Override
@@ -34,5 +36,6 @@ public class PiratePractice extends Game {
         batch.dispose();
         font.dispose();
     }
+
 
 }
