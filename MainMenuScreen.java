@@ -8,7 +8,6 @@ import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
-import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.utils.viewport.FitViewport;
@@ -19,14 +18,13 @@ import com.badlogic.gdx.utils.viewport.FitViewport;
  */
 public class MainMenuScreen implements Screen{
 
-    Skin skin;
     Stage stage;
     SpriteBatch batch;
     PiratePractice game;
 
     public MainMenuScreen(PiratePractice game) {
         this.game = game;
-        skin = new Skin(Gdx.files.internal("skins/MenuSkin/uiskin.json"));
+
         create();
     }
 
@@ -41,26 +39,26 @@ public class MainMenuScreen implements Screen{
         table.top();
         stage.addActor(table);
 
-        Image menuImage = new Image(skin, "title");
+        Image menuImage = new Image(game.skin, "title");
         table.add(menuImage).padTop(115).padBottom(96);
 
         table.row();
 
-        Table buttonTable = new Table(skin);
-        buttonTable.setBackground("button box");
+        Table buttonTable = new Table(game.skin);
+        buttonTable.setBackground("main button box");
         buttonTable.setDebug(true);
         table.add(buttonTable);
 
-        TextButton playButton = new TextButton("PLAY", skin, "Button");
+        TextButton playButton = new TextButton("PLAY", game.skin, "main button");
         playButton.addListener(new InputListener() {
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
                 System.out.println("Play");
-                game.setScreen(new GameScreen(game));
+                game.setScreen(new WorldScreen(game));
                 return false;
             }
         });
-        TextButton newButton = new TextButton("NEW GAME", skin, "Button");
+        TextButton newButton = new TextButton("NEW GAME", game.skin, "main button");
         newButton.addListener(new InputListener() {
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
@@ -68,7 +66,7 @@ public class MainMenuScreen implements Screen{
                 return false;
             }
         });
-        TextButton settingsButton = new TextButton("SETTINGS", skin, "Button");
+        TextButton settingsButton = new TextButton("SETTINGS", game.skin, "main button");
         settingsButton.addListener(new InputListener() {
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
@@ -76,7 +74,7 @@ public class MainMenuScreen implements Screen{
                 return false;
             }
         });
-        TextButton exitButton = new TextButton("EXIT", skin, "Button");
+        TextButton exitButton = new TextButton("EXIT", game.skin, "main button");
         exitButton.addListener(new InputListener() {
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
@@ -128,7 +126,6 @@ public class MainMenuScreen implements Screen{
     @Override
     public void dispose () {
         stage.dispose();
-        skin.dispose();
     }
 
 

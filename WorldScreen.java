@@ -4,32 +4,43 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.input.GestureDetector;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.david.piratepractice.Scenes.Hud;
 
 /**
  * Created by David on 12/17/2015.
  */
-public class GameScreen implements Screen, GestureDetector.GestureListener {
+public class WorldScreen implements Screen, GestureDetector.GestureListener {
 
     private OrthographicCamera camera;
     private PiratePractice game;
-    private Texture texture;
     private Sprite map;
     private Hud hud;
+    private Stage stage;
+    private Table table;
 
-    public GameScreen(PiratePractice game) {
+    public WorldScreen(PiratePractice game) {
         this.game = game;
-        hud = new Hud(game.batch);
-    }
+        hud = new Hud(game);
 
+        stage = new Stage(new FitViewport(game.V_WIDTH, game.V_HEIGHT-Hud.hudHeight, new OrthographicCamera()));
+        table = new Table();
+        table.setDebug(true);
+        table.setFillParent(true);
+        table.top();
+        table.setBackground(game.skin.getDrawable("world_map"));
+
+        stage.addActor(table);
+    }
     @Override
     public void dispose() {
-        texture.dispose();
         hud.dispose();
+        stage.dispose();
     }
 
     @Override
@@ -42,6 +53,8 @@ public class GameScreen implements Screen, GestureDetector.GestureListener {
         Gdx.gl.glClearColor(0, .4745f, .749f, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         game.batch.setProjectionMatrix(hud.stage.getCamera().combined);
+
+        stage.draw();
         hud.stage.draw();
 
     }
